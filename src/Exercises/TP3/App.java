@@ -12,16 +12,8 @@ public class App {
         String legajo = "VINF014686";
         System.out.println("Trabajo realizado por: " + nombreApellido + "- DNI: " + dni + "- LEGAJO: "+ legajo);
 
-        
-        // Agregar elementos a los HashMaps
-        System.out.println("rta");
-        System.out.println(Hash.FuncionHash(1, 10));
-
-
-         // Buscar elementos en los HashMaps
-         
-         
-         //TO DO: chequear si funciona el buscador, ver la clase grabada, cambiar a static (no public!) todo el archivo hash, los metodos y atributos
+        Hash.main(args);
+    
     }
 
     

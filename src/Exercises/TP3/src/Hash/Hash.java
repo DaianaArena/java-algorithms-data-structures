@@ -1,6 +1,5 @@
 package Exercises.TP3.src.Hash;
 
-import java.util.HashMap;
 
 public class Hash {
    
@@ -10,41 +9,83 @@ public class Hash {
     Legajo = "VINF014686"
     */
     
-     // HashMap para almacenar pares clave-valor
-     private static HashMap<Integer, Integer> hashMap = new HashMap<>();
-
-     // Constructor
-     public Hash() {
-         // Constructor vacío
-     }
-
-    //En los siguientes métodos "n" es la clave y "m" el valor
-
-    // Método para añadir un elemento al HashMap
-    public static int FuncionHash(int n, int m) {
-        Integer h = hashMap.put(n, m);
-        if (h == null) {
-            return 1;  // se creo correctamente
-        }
-        return -1;        // No se proporcionó una instancia válida de Hash
+    int dato;
+    int estado; //0 = Vacío, 1 = Eliminado, 2 = Ocupado
+    static int FuncionHash(int n, int m) {
+    //n es el valor original
+    //m es el tamaño de la tabla
+    // y debe devolver una posición int dentro del tamaño m
+    return n % m;
     }
-
-    // Método para buscar un elemento en el HashMap, devuelve default si hay un error
-    public static int buscaHash(Hash[] h, int n, int m) {
-        // Chequear si efectivamente esa key se corresponde a ese value o devolver -1
-        if (h == null || h.length == 0) {
-            return -1; // No se proporcionó una instancia válida de Hash
+    static void insertaHash(Hash[] h, int m, int n) {
+    boolean i = false;
+    int j = FuncionHash(n, m);
+        do {
+            if (h[j].estado == 0 || h[j].estado == 1) {
+            
+                h[j].dato = n;
+                h[j].estado = 2;
+                i = true;
+            } else {
+            j++;
         }
+        } while (j < m && !i);
 
-        for (Hash instancia : h) {
-            if (instancia != null) {
-                Integer valor = hashMap.get(n);
-                if (valor != null && valor == m) {
-                    return 1; // Clave encontrada con el valor correspondiente
-                }
+        if (i) {
+            System.out.print ("Elemento insertado con Éxito en la siguiente posición: "+ j  + " \n");
+        } else {
+            System.out.print ("Tabla llena!!! \\n");
+        }
+    }
+    static int buscaHash(Hash[] h, int m, int n) {
+        // Comenzar en el índice obtenido mediante la función de hash
+        int j = FuncionHash(n, m);
+        do {
+            // Si el elemento se encuentra
+            if (h[j].estado == 2 && h[j].dato == n) {
+                System.out.print ("Elemento encontrado con Éxito! \n");
+                ;
+                return j; // Devolver la posición donde se encontró el elemento
             }
-        }
-
-        return -1; // No se encontró la clave o el valor no coincidió
+            j++;
+        } while (j < m);
+        // Si el elemento no se encuentra en la tabla hash
+        System.out.println("Elemento no encontrado, ocurrió un error. \n");
+        return -1; // Devolver -1 para indicar que no se encontró el elemento
     }
+    static int eliminaHash(Hash[] h, int m, int n) {
+    int i = buscaHash(h, m, n);
+    if (i == -1) {
+    return -1;
+    } else {
+    h[i].estado = 1;
+    System.out.print ("Elemento Borrado! \n");
+    return 1;
+    }
+    }
+    
+
+    
+    public static void main(String[] args) {
+        int i, n,elemento;
+        // Tabla Definida de 15
+        int m=15;
+        Hash[] h = new Hash[m];
+        for (i = 0; i < m; i++) {
+        h[i] = new Hash();
+        h[i].estado = 0;
+        }
+        // Insertar elemento
+        Hash.insertaHash(h, m, 15);
+        Hash.insertaHash(h, m, 130);
+        Hash.insertaHash(h, m, 7);
+        Hash.insertaHash(h, m, 32);
+        //Buscando un elemento
+        elemento=7;
+        i = Hash.buscaHash(h, m, elemento);
+        System.out.print ("Elemento encontrado en la posición: " + i + "\n");
+        i = Hash.eliminaHash(h, m, 130);
+        System.out.print ("Elemento eliminado de la posición: " + i + "\n");
+    }
+    
 }
