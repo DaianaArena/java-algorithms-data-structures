@@ -1,6 +1,13 @@
 package Exercises.TP4.QuickSort;
 
 public class QuickSort {
+
+    // Datos de identificación    
+        //nombreApellido = "Daiana Arena";
+        //dni = "38629115";
+        // legajo = "VINF014686";
+
+
     /* Esta función toma el último elemento como pivote,
     * coloca el elemento pivote en su posición correcta en la matriz
     ordenada
